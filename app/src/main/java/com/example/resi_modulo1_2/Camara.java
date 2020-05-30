@@ -35,7 +35,7 @@ public class Camara extends AppCompatActivity
 
     boolean check = true;
 
-    String CARPETA_RAIZ = "MisFotos - ";
+    String CARPETA_RAIZ = "MisFotos-";
     String CARPETAS_IMAGENES = "Banyu";
     String RUTA_IMAGEN = CARPETA_RAIZ + CARPETAS_IMAGENES;
     String path;
@@ -77,15 +77,16 @@ public class Camara extends AppCompatActivity
                 finish();
             }
         });
-
-        File fileImagen = new File(Environment.getExternalStorageState(), RUTA_IMAGEN);
+        //checar aqui el deprecated
+        File fileImagen = new File(Environment.getExternalStorageDirectory(), RUTA_IMAGEN);
         boolean isCreada = fileImagen.exists();
         if(!isCreada)
         {
             isCreada = fileImagen.mkdirs();
         }
         Nombre = nombreRandom();
-        path = Environment.getExternalStorageState()+File.separator+RUTA_IMAGEN+File.separator+Nombre;
+        //checar aqui el deprecated
+        path = Environment.getExternalStorageDirectory()+File.separator+RUTA_IMAGEN+File.separator+Nombre;
         File imagen = new File(path);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

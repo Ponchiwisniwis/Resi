@@ -384,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                             try
                             {
                                 JSONObject jsonObject = new JSONObject(new String(response.data));
-                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                 jsonObject.toString().replace("\\\\","");
 
                                 if (jsonObject.getString("status").equals("true"))
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error)
                         {
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
             {
