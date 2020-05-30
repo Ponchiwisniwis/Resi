@@ -513,6 +513,7 @@ public class MainActivity extends AppCompatActivity {
             String displayName = String.valueOf(Calendar.getInstance().getTimeInMillis()+".mp4");
             Log.d("ooooooo",displayName);
             Subir(displayName,uri);
+            Toast.makeText(this, "Video enviado con exito", Toast.LENGTH_LONG).show();
         }
         baseAdapter = new GridViewAdapter(MainActivity.this, listaImagenes);
         gvImagenes.setAdapter(baseAdapter);

@@ -39,9 +39,9 @@ public class Camara extends AppCompatActivity
     String CARPETAS_IMAGENES = "Banyu";
     String RUTA_IMAGEN = CARPETA_RAIZ + CARPETAS_IMAGENES;
     String path;
-    String Nombre;
-    String Comentario;
-    String Cadena;
+    String Nombre="";
+    String Comentario="";
+    String Cadena="";
 
     ImageView ivCamara;
     EditText edComentario;
@@ -78,14 +78,14 @@ public class Camara extends AppCompatActivity
             }
         });
 
-        File fileImagen = new File(Environment.getExternalStorageDirectory(), RUTA_IMAGEN);
+        File fileImagen = new File(Environment.getExternalStorageState(), RUTA_IMAGEN);
         boolean isCreada = fileImagen.exists();
         if(!isCreada)
         {
             isCreada = fileImagen.mkdirs();
         }
         Nombre = nombreRandom();
-        path = Environment.getExternalStorageDirectory()+File.separator+RUTA_IMAGEN+File.separator+Nombre;
+        path = Environment.getExternalStorageState()+File.separator+RUTA_IMAGEN+File.separator+Nombre;
         File imagen = new File(path);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -138,6 +138,15 @@ public class Camara extends AppCompatActivity
         return temp;
     }
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter)
+    {
+        float ratio = Math.min((float) maxImageSize / realImage.getWidth(), (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width, height, filter);
+        return newBitmap;
+    }
+
     public String convertirBase64(Bitmap bitmap)
     {
         Bitmap bm = scaleDown(bitmap, 500, true);
@@ -155,15 +164,6 @@ public class Camara extends AppCompatActivity
         Cadena = "";
         Comentario = "";
         path = "";
-    }
-
-    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter)
-    {
-        float ratio = Math.min((float) maxImageSize / realImage.getWidth(), (float) maxImageSize / realImage.getHeight());
-        int width = Math.round((float) ratio * realImage.getWidth());
-        int height = Math.round((float) ratio * realImage.getHeight());
-        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width, height, filter);
-        return newBitmap;
     }
 
     @Override
