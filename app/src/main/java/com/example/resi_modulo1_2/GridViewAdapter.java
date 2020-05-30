@@ -11,36 +11,43 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class GridViewAdapter extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter
+{
 
     Context context;
     List<Uri> listaImagenes;
     LayoutInflater layoutInflater;
 
-    public GridViewAdapter(Context context, List<Uri> listaImagenes) {
+    public GridViewAdapter(Context context, List<Uri> listaImagenes)
+    {
         this.context = context;
         this.listaImagenes = listaImagenes;
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return listaImagenes.size();
     }
 
     @Override
-    public Object getItem(int i) {
+    public Object getItem(int i)
+    {
         return listaImagenes.get(i);
     }
 
     @Override
-    public long getItemId(int i) {
+    public long getItemId(int i)
+    {
         return i;
     }
 
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup)
+    {
 
-        if(view == null) {
+        if(view == null)
+        {
             layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.item_gv_imagenes, null);
         }

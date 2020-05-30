@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         tv_Video = findViewById(R.id.tv_Video);
         etComentario = findViewById(R.id.edComentario);
         btnEnviar = findViewById(R.id.btnEnviar);
-
+        //Animaciones
         fab_open_anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_open);
         fab_close_anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_close);
         fab_rotate_anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fab_rotate);
@@ -224,14 +224,16 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void Video(){
+    private void Video()
+    {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("video/*");
         startActivityForResult(intent,2);
     }
 
-    public void mostrarProgressDialog(){
+    public void mostrarProgressDialog()
+    {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Subiendo...");
         progressDialog.setMessage("Espera Por Favor");
@@ -241,7 +243,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void subirImagenes()
     {
-        if(check){
+        if(check)
+        {
             //aqui es foto
             enviarImagenes(Nombre, Cadena, Comentario);
             check = false;
@@ -266,9 +269,8 @@ public class MainActivity extends AppCompatActivity {
                     bitmap.recycle();
                     limpiarTodo();
                     progressDialog.dismiss();
-                } catch (IOException e)
-                {
                 }
+                catch (IOException e) {}
             }
         }
 
@@ -291,7 +293,8 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error)
             {
             }
-        })
+        }
+        )
         {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError
@@ -325,7 +328,8 @@ public class MainActivity extends AppCompatActivity {
         return newBitmap;
     }
 
-    public String nombreRandom(){
+    public String nombreRandom()
+    {
         String temp;
         Random num = new Random();
         int num1 = 99+num.nextInt(1000);
@@ -335,7 +339,8 @@ public class MainActivity extends AppCompatActivity {
         return temp;
     }
 
-    public void limpiarTodo(){
+    public void limpiarTodo()
+    {
         check = false;
         Nombre = "";
         Cadena = "";
@@ -346,41 +351,50 @@ public class MainActivity extends AppCompatActivity {
         baseAdapter = new GridViewAdapter(MainActivity.this, listaImagenes);
         gvImagenes.setAdapter(baseAdapter);
     }
+
     //Video
-    public byte[] getBytes(InputStream inputStream) throws IOException {
+    public byte[] getBytes(InputStream inputStream) throws IOException
+    {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
         int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
+        while ((len = inputStream.read(buffer)) != -1)
+        {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
     }
     //Video
-    private void Subir(final String pdfname, Uri pdffile){
-
+    private void Subir(final String pdfname, Uri pdffile)
+    {
         InputStream iStream = null;
-        try {
+        try
+        {
             iStream = getContentResolver().openInputStream(pdffile);
             final byte[] inputData = getBytes(iStream);
             VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL_UPLOAD_VIDEO,
-                    new Response.Listener<NetworkResponse>() {
+                    new Response.Listener<NetworkResponse>()
+                    {
                         @Override
-                        public void onResponse(NetworkResponse response) {
+                        public void onResponse(NetworkResponse response)
+                        {
                             Log.d("ressssssoo",new String(response.data));
                             rQueue.getCache().clear();
-                            try {
+                            try
+                            {
                                 JSONObject jsonObject = new JSONObject(new String(response.data));
                                 Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                 jsonObject.toString().replace("\\\\","");
 
-                                if (jsonObject.getString("status").equals("true")) {
+                                if (jsonObject.getString("status").equals("true"))
+                                {
                                     Log.d("come::: >>>  ","yessssss");
                                     arraylist = new ArrayList<HashMap<String, String>>();
                                     JSONArray dataArray = jsonObject.getJSONArray("data");
 
-                                    for (int i = 0; i < dataArray.length(); i++) {
+                                    for (int i = 0; i < dataArray.length(); i++)
+                                    {
                                         JSONObject dataobj = dataArray.getJSONObject(i);
                                         aux = dataobj.optString("pathToFile");
                                     }
@@ -391,36 +405,41 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     },
-                    new Response.ErrorListener() {
+                    new Response.ErrorListener()
+                    {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(VolleyError error)
+                        {
                             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }) {
+                    })
+            {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() throws AuthFailureError
+                {
                     Map<String, String> params = new HashMap<>();
                     // params.put("tags", "ccccc");  add string parameters
                     return params;
                 }
                 @Override
-                protected Map<String, DataPart> getByteData() {
+                protected Map<String, DataPart> getByteData()
+                {
                     Map<String, DataPart> params = new HashMap<>();
                     params.put("filename", new DataPart(pdfname ,inputData));
                     return params;
                 }
             };
 
-            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    0,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             rQueue = Volley.newRequestQueue(MainActivity.this);
             rQueue.add(volleyMultipartRequest);
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
@@ -457,7 +476,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         super.onBackPressed();
     }
 

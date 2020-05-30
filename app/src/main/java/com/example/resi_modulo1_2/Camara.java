@@ -28,7 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class Camara extends AppCompatActivity {
+public class Camara extends AppCompatActivity
+{
 
     int TOMAR_FOTO = 2;
 
@@ -47,7 +48,8 @@ public class Camara extends AppCompatActivity {
     FloatingActionButton fabEnviar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara);
         getSupportActionBar().hide();
@@ -59,9 +61,11 @@ public class Camara extends AppCompatActivity {
         edComentario.setVisibility(View.INVISIBLE);
         fabEnviar.setVisibility(View.INVISIBLE);
 
-        fabEnviar.setOnClickListener(new View.OnClickListener() {
+        fabEnviar.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Comentario = edComentario.getText().toString();
                 Intent regresar = new Intent(Camara.this, MainActivity.class);
                 regresar.putExtra("Nombre", Nombre);
@@ -97,12 +101,15 @@ public class Camara extends AppCompatActivity {
         startActivityForResult(intent,TOMAR_FOTO);
     }
 
-    public static int readPictureDegree(String path) {
+    public static int readPictureDegree(String path)
+    {
         int degree  = 0;
-        try {
+        try
+        {
             ExifInterface exifInterface = new ExifInterface(path);
             int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            switch (orientation) {
+            switch (orientation)
+            {
                 case ExifInterface.ORIENTATION_ROTATE_90:
                     degree = 90;
                     break;
@@ -113,13 +120,15 @@ public class Camara extends AppCompatActivity {
                     degree = 270;
                     break;
             }
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
         return degree;
     }
 
-    public String nombreRandom(){
+    public String nombreRandom()
+    {
         String temp;
         Random num = new Random();
         String num1 = String.valueOf(99+num.nextInt(1000));
@@ -139,7 +148,8 @@ public class Camara extends AppCompatActivity {
         return encode;
     }
 
-    public void limpiarTodo(){
+    public void limpiarTodo()
+    {
         check = false;
         Nombre = "";
         Cadena = "";
@@ -157,7 +167,8 @@ public class Camara extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         super.onBackPressed();
         Toast.makeText(this,"Regresando...", Toast.LENGTH_SHORT).show();
         Intent regresar = new Intent(Camara.this, MainActivity.class);
